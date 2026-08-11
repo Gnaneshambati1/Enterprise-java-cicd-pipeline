@@ -16,7 +16,7 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-    	    steps {
+            steps {
                 withSonarQubeEnv('SonarQube') {
                     sh './mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=employee-cicd'
                 }
@@ -31,20 +31,20 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'sudo docker build -t employee-cicd:1.0 .'
+                sh 'docker build -t employee-cicd:1.0 .'
             }
         }
 
         stage('Stop Old Container') {
             steps {
-                sh 'sudo docker rm -f employee-app || true'
+                sh 'docker rm -f employee-app || true'
             }
         }
 
         stage('Run Docker Container') {
             steps {
                 sh '''
-                    sudo docker run -d \
+                    docker run -d \
                     --name employee-app \
                     -p 8081:8081 \
                     employee-cicd:1.0

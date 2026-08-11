@@ -16,9 +16,9 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            steps {
+    	    steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh './mvnw sonar:sonar -Dsonar.projectKey=employee-cicd'
+                    sh './mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=employee-cicd'
                 }
             }
         }
